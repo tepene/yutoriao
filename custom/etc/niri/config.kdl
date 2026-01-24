@@ -1,0 +1,20 @@
+// Main Niri Configuration
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+// Check the wiki for a full description of the configuration:
+// https://yalter.github.io/niri/Configuration:-Introduction
+
+// This file imports all configuration modules
+
+// Import modular configuration files
+include "inputs.kdl"
+include "outputs.kdl"
+include "binds.kdl"
+include "switch-events.kdl"
+include "layout.kdl"
+include "misc.kdl"
+include "window-rule.kdl"
+include "layer-rule.kdl"
+include "animations.kdl"
+include "gestures.kdl"
+include "recent-windows.kdl"
