@@ -15,6 +15,7 @@ Scripts are named with a number prefix (e.g., `10-build.sh`, `20-onepassword.sh`
 - **`20-onepassword.sh.example`** - Example showing how to install software from third-party RPM repositories (Google Chrome, 1Password)
 
 To use an example script:
+
 1. Remove the `.example` extension
 2. Make it executable: `chmod +x build/20-yourscript.sh`
 3. The build system will automatically run it in numerical order
@@ -25,7 +26,7 @@ Create numbered scripts for different purposes:
 
 ```bash
 # 10-build.sh - Base system (already exists)
-# 20-drivers.sh - Hardware drivers  
+# 20-drivers.sh - Hardware drivers
 # 30-development.sh - Development tools
 # 40-gaming.sh - Gaming software
 # 50-cleanup.sh - Final cleanup tasks
@@ -52,6 +53,7 @@ echo "Running custom setup..."
 ### Disabling Scripts
 
 To temporarily disable a script without deleting it:
+
 - Rename it with `.disabled` extension: `20-script.sh.disabled`
 - Or remove execute permission: `chmod -x build/20-script.sh`
 

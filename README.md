@@ -155,7 +155,6 @@ This creates two files:
 - `cosign.pub` (public key) - Commit this to your repository
 
 2. Add the private key to GitHub Secrets:
-
    - Copy the entire contents of `cosign.key`
    - Go to your repository on GitHub
    - Navigate to Settings → Secrets and variables → Actions ([GitHub docs](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository))
@@ -165,13 +164,11 @@ This creates two files:
    - Click "Add secret"
 
 3. Replace the contents of `cosign.pub` with your public key:
-
    - Open `cosign.pub` in your repository
    - Replace the placeholder with your actual public key
    - Commit and push the change
 
 4. Enable signing in the workflow:
-
    - Edit `.github/workflows/build.yml`
    - Find the "OPTIONAL: Image Signing with Cosign" section.
    - Uncomment the steps to install Cosign and sign the image (remove the `#` from the beginning of each line in that section).
@@ -188,14 +185,12 @@ Ready to take your custom OS to production? Enable these features for enhanced s
 ### Production Checklist
 
 - [ ] **Enable Image Signing** (Recommended)
-
   - Provides cryptographic verification of your images
   - Prevents tampering and ensures authenticity
   - See "Optional: Enable Image Signing" section above for setup instructions
   - Status: **Disabled by default** to allow immediate testing
 
 - [ ] **Enable SBOM Attestation** (Recommended)
-
   - Generates Software Bill of Materials for supply chain security
   - Provides transparency about what's in your image
   - Requires image signing to be enabled first

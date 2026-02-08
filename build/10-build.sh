@@ -21,7 +21,7 @@ cp /ctx/custom/brew/*.Brewfile /usr/share/ublue-os/homebrew/
 
 # Consolidate Just Files
 mkdir -p /usr/share/ublue-os/just/
-find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >> /usr/share/ublue-os/just/60-custom.just
+find /ctx/custom/ujust -iname '*.just' -exec printf "\n\n" \; -exec cat {} \; >>/usr/share/ublue-os/just/60-custom.just
 
 # Copy Flatpak preinstall files
 mkdir -p /etc/flatpak/preinstall.d/

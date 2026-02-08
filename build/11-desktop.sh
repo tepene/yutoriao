@@ -11,17 +11,17 @@ echo "::group:: Install Desktop Packages"
 
 # Install niri, greetd & DankMaterialShell
 dnf5 install --setopt=install_weak_deps=False -y \
-    greetd \
-    greetd-selinux \
-    niri \
-    gnome-keyring \
-    xdg-desktop-portal-gnome \
-    xwayland-satellite \
-    mako \
-    waybar \
-    swaybg \
-    swayidle \
-    fuzzel
+  greetd \
+  greetd-selinux \
+  niri \
+  gnome-keyring \
+  xdg-desktop-portal-gnome \
+  xwayland-satellite \
+  mako \
+  waybar \
+  swaybg \
+  swayidle \
+  fuzzel
 
 copr_install_isolated "binarypie/hypercube" regreet
 copr_install_isolated "scottames/ghostty" ghostty
@@ -32,7 +32,7 @@ install_fonts "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/
 systemctl enable greetd
 
 # Create tmpfiles.d for greetd
-cat > /usr/lib/tmpfiles.d/greetd.conf << 'EOF'
+cat >/usr/lib/tmpfiles.d/greetd.conf <<'EOF'
 # Type Path                                           Mode UID    GID   Age Argument
 d     /var/lib/greetd                                 0750 greetd greetd - -
 L     /var/lib/greetd/.config/systemd/user/xdg-desktop-portal.service - - - - /dev/null
