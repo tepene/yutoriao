@@ -4,7 +4,7 @@ export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:l
 
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
-alias run-vm := run-vm-qcow2
+alias run-vm := virsh-vm
 
 [private]
 default:
@@ -59,6 +59,8 @@ sudoif command *args:
         if [[ "${UID}" -eq 0 ]]; then
             "$@"
         elif [[ "$(command -v sudo)" && -n "${SSH_ASKPASS:-}" ]] && [[ -n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}" ]]; then
+            # FIX: Explicitly set SUDO_ASKPASS to the value of SSH_ASKPASS
+            export SUDO_ASKPASS="${SSH_ASKPASS}"
             /usr/bin/sudo --askpass "$@" || exit 1
         elif [[ "$(command -v sudo)" ]]; then
             /usr/bin/sudo "$@" || exit 1
@@ -183,6 +185,7 @@ _build-bib $target_image $tag $type $config: (_rootful_load_image target_image t
       "${target_image}:${tag}"
 
     mkdir -p output
+    sudo rm -rf output/$type
     sudo mv -f $BUILDTMP/* output/
     sudo rmdir $BUILDTMP
     sudo chown -R $USER:$USER output/
@@ -221,77 +224,28 @@ rebuild-raw $target_image=("localhost/" + image_name) $tag=default_tag: && (_reb
 [group('Build Virtal Machine Image')]
 rebuild-iso $target_image=("localhost/" + image_name) $tag=default_tag: && (_rebuild-bib target_image tag "iso" "iso/iso.toml")
 
-# Run a virtual machine with the specified image type and configuration
-_run-vm $target_image $tag $type $config:
-    #!/usr/bin/bash
-    set -eoux pipefail
-
-    # Determine the image file based on the type
-    image_file="output/${type}/disk.${type}"
-    if [[ $type == iso ]]; then
-        image_file="output/bootiso/install.iso"
-    fi
-
-    # Build the image if it does not exist
-    if [[ ! -f "${image_file}" ]]; then
-        just "build-${type}" "$target_image" "$tag"
-    fi
-
-    # Determine an available port to use
-    port=8006
-    while grep -q :${port} <<< $(ss -tunalp); do
-        port=$(( port + 1 ))
-    done
-    echo "Using Port: ${port}"
-    echo "Connect to http://localhost:${port}"
-
-    # Set up the arguments for running the VM
-    run_args=()
-    run_args+=(--rm --privileged)
-    run_args+=(--pull=newer)
-    run_args+=(--publish "127.0.0.1:${port}:8006")
-    run_args+=(--env "CPU_CORES=4")
-    run_args+=(--env "RAM_SIZE=8G")
-    run_args+=(--env "DISK_SIZE=64G")
-    run_args+=(--env "TPM=Y")
-    run_args+=(--env "GPU=Y")
-    run_args+=(--device=/dev/kvm)
-    run_args+=(--volume "${PWD}/${image_file}":"/boot.${type}")
-    run_args+=(docker.io/qemux/qemu)
-
-    # Run the VM and open the browser to connect
-    (sleep 30 && xdg-open http://localhost:"$port") &
-    podman run "${run_args[@]}"
-
-# Run a virtual machine from a QCOW2 image
+# Run a virtual machine using virsh
 [group('Run Virtal Machine')]
-run-vm-qcow2 $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-vm target_image tag "qcow2" "iso/disk.toml")
-
-# Run a virtual machine from a RAW image
-[group('Run Virtal Machine')]
-run-vm-raw $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-vm target_image tag "raw" "iso/disk.toml")
-
-# Run a virtual machine from an ISO
-[group('Run Virtal Machine')]
-run-vm-iso $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-vm target_image tag "iso" "iso/iso.toml")
-
-# Run a virtual machine using systemd-vmspawn
-[group('Run Virtal Machine')]
-spawn-vm rebuild="0" type="qcow2" ram="6G":
+virsh-vm rebuild="0":
     #!/usr/bin/env bash
 
     set -euo pipefail
 
-    [ "{{ rebuild }}" -eq 1 ] && echo "Rebuilding the ISO" && just build-vm {{ rebuild }} {{ type }}
+    [ "{{ rebuild }}" -eq 1 ] && echo "rbuilding image" && just build-vm
 
-    systemd-vmspawn \
-      -M "bootc-image" \
-      --console=gui \
-      --cpus=2 \
-      --ram=$(echo {{ ram }}| /usr/bin/numfmt --from=iec) \
-      --network-user-mode \
-      --vsock=false --pass-ssh-key=false \
-      -i ./output/**/*.{{ type }}
+    virsh destroy flvOS 2>/dev/null || true
+    virsh undefine flvOS 2>/dev/null || true
+
+    virt-install \
+        --name flvOS \
+        --memory  6144 \
+        --vcpus 2 \
+        --disk ./output/qcow2/disk.qcow2,bus=sata \
+        --import \
+        --os-variant silverblue-rawhide \
+        --network default \
+        --graphics spice,listen=none,gl.enable=yes \
+        --video virtio,accel3d=yes
 
 # Runs shell check on all Bash scripts
 lint:
