@@ -23,23 +23,13 @@ dnf5 install --setopt=install_weak_deps=False -y \
   swayidle \
   fuzzel
 
-copr_install_isolated "binarypie/hypercube" regreet
+copr_install_isolated "avengemedia/danklinux" dms-greeter
 copr_install_isolated "scottames/ghostty" ghostty
 
 install_fonts "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/NerdFontsSymbolsOnly.zip"
 
 # Enable services
 systemctl enable greetd
-
-# Create tmpfiles.d for greetd
-cat >/usr/lib/tmpfiles.d/greetd.conf <<'EOF'
-# Type Path                                           Mode UID    GID   Age Argument
-d     /var/lib/greetd                                 0750 greetd greetd - -
-L     /var/lib/greetd/.config/systemd/user/xdg-desktop-portal.service - - - - /dev/null
-d     /var/lib/greetd/.config                      0755 greetd greetd - -
-d     /var/lib/greetd/.config/systemd              0755 greetd greetd - -
-d     /var/lib/greetd/.config/systemd/user         0755 greetd greetd - -
-EOF
 
 # Create user service integration for niri
 mkdir -p /etc/systemd/user/niri.service.wants

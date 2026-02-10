@@ -1,0 +1,23 @@
+{
+  "name": "SlateDepth",
+  "primary": "#62D9D9",
+  "onPrimary": "#003737",
+  "primaryContainer": "#2F4F4F",
+  "onPrimaryContainer": "#B1F1F1",
+  "secondary": "#B0CCCB",
+  "onSecondary": "#1B3534",
+  "surface": "#191C1C",
+  "onSurface": "#E0E3E2",
+  "surfaceVariant": "#3F4948",
+  "onSurfaceVariant": "#BEC9C8",
+  "background": "#0E1111",
+  "onBackground": "#E0E3E2",
+  "outline": "#899392",
+  "surfaceContainer": "#1D2121",
+  "surfaceContainerHigh": "#282B2B",
+  "surfaceContainerHighest": "#333636",
+  "error": "#FFB4AB",
+  "onError": "#690005",
+  "warning": "#EFB008",
+  "info": "#70D5FF"
+}

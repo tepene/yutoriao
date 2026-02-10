@@ -1,8 +1,8 @@
-i[Unit]
+[Unit]
 PartOf=graphical-session.target
 After=graphical-session.target
 Requisite=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/swaybg -m fill -i "%h/Pictures/LakeSide.png"
+ExecStart=/usr/bin/swaybg -m fill -i "/usr/share/backgrounds/green_blue_polygonal.jpg"
 Restart=on-failure

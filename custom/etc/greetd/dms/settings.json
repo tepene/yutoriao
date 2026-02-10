@@ -1,0 +1,12 @@
+{
+  "use24HourClock": true,
+  "showSeconds": false,
+  "clockFormat": "HH:mm",
+  "lockScreenShowPowerActions": true,
+  "weatherEnabled": false,
+  "iconTheme": "System Default",
+  "currentThemeName": "custom",
+  "customThemeFile": "/etc/greetd/dms/colors.json",
+  "cornerRadius": 12,
+  "animationSpeed": 2
+}

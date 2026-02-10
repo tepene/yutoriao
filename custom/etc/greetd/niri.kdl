@@ -1,13 +1,18 @@
-// regreet niri configuration
-layout {
-  background-color "#000000"
-}
-spawn-sh-at-startup "regreet; niri msg action quit --skip-confirmation"
 hotkey-overlay {
     skip-at-startup
 }
-cursor {
-    // Change the theme and size of the cursor as well as set the
-    // `XCURSOR_THEME` and `XCURSOR_SIZE` env variables.
-    xcursor-theme "catppuccin-mocha-red-cursors"
+
+environment {
+    DMS_RUN_GREETER "1"
+    DMS_GREET_CFG_DIR "/etc/greetd/dms"
+}
+
+gestures {
+  hot-corners {
+    off
+  }
+}
+
+layout {
+  background-color "#000000"
 }
