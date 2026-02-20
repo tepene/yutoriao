@@ -5,7 +5,7 @@
 # Launch or focus on a given TUI identified by the passed in as the command.
 # Use by commands like omarchy-launch-wifi to ensure there is only one wifi configuration screen open.
 
-APP_ID="org.flvos.$(basename "$1")"
-LAUNCH_COMMAND="flvos-launch-tui $@"
+APP_ID="org.yutoriao.$(basename "$1")"
+LAUNCH_COMMAND="yutoriao-launch-tui $@"
 
-exec flvos-launch-or-focus "$APP_ID" "$LAUNCH_COMMAND"
+exec yutoriao-launch-or-focus "$APP_ID" "$LAUNCH_COMMAND"

@@ -187,7 +187,7 @@ Universal Blue images include helpers in `/usr/lib/ujust/ujust.sh`:
 Test locally before committing:
 
 1. Build your image: `just build` (see [`Justfile`](../../Justfile))
-2. If on a bootc system: `sudo bootc switch --target localhost/flvOS:stable`
+2. If on a bootc system: `sudo bootc switch --target localhost/yutoriao:stable`
 3. Reboot and test: `ujust your-command`
 
 Or test the just files directly:

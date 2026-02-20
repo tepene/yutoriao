@@ -1,4 +1,4 @@
-export image_name := env("IMAGE_NAME", "flvos")
+export image_name := env("IMAGE_NAME", "yutoriao")
 export default_tag := env("DEFAULT_TAG", "stable")
 export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest@sha256:903c01d110b8533f8891f07c69c0ba2377f8d4bc7e963311082b7028c04d529d")
 
@@ -240,11 +240,11 @@ virsh-vm rebuild="0":
 
     [ "{{ rebuild }}" -eq 1 ] && echo "rbuilding image" && just build-vm
 
-    virsh destroy flvOS 2>/dev/null || true
-    virsh undefine flvOS 2>/dev/null || true
+    virsh destroy yutoriao 2>/dev/null || true
+    virsh undefine yutoriao 2>/dev/null || true
 
     virt-install \
-        --name flvOS \
+        --name yutoriao \
         --memory  6144 \
         --vcpus 2 \
         --disk ./output/qcow2/disk.qcow2,bus=sata \

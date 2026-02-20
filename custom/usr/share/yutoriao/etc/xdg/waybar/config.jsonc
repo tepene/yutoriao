@@ -7,7 +7,7 @@
   "margin-right": 10,
   "spacing": 8,
 
-  "modules-left": ["custom/flvos", "niri/workspaces"],
+  "modules-left": ["custom/yutoriao", "niri/workspaces"],
   "modules-center": ["clock"],
   "modules-right": [
     "network",
@@ -19,7 +19,7 @@
     "custom/power",
   ],
 
-  "custom/flvos": {
+  "custom/yutoriao": {
     "format": "",
     "on-click": "fuzzel",
     "tooltip": false,
@@ -91,12 +91,12 @@
     "interval": 1,
     "format": " {usage:>2}% {icon}",
     "format-icons": [" ", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
-    "on-click": "flvos-launch-or-focus-tui btop",
+    "on-click": "yutoriao-launch-or-focus-tui btop",
   },
   "memory": {
     "interval": 30,
     "format": " {used:0.1f}G/{total:0.1f}G",
-    "on-click": "flvos-launch-or-focus-tui btop",
+    "on-click": "yutoriao-launch-or-focus-tui btop",
   },
 
   "battery": {
@@ -120,7 +120,7 @@
 
   "custom/power": {
     "format": "⏻",
-    "on-click": "nwg-bar -s /usr/share/flvos/etc/xdg/nwg-bar/style.css -t /usr/share/flvos/etc/xdg/nwg-bar/bar.json -i 48",
+    "on-click": "nwg-bar -s /usr/share/yutoriao/etc/xdg/nwg-bar/style.css -t /usr/share/yutoriao/etc/xdg/nwg-bar/bar.json -i 48",
     "tooltip": false,
   },
 }

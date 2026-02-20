@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+## source: https://github.com/basecamp/omarchy/blob/dev/bin/omarchy-launch-tui
+
+# Launch the TUI command passed in as an argument in the default terminal with an org.yutoriao.COMMAND app id for styling.
+exec setsid uwsm-app -- xdg-terminal-exec --app-id=org.yutoriao.$(basename $1) -e "$1" "${@:2}"
